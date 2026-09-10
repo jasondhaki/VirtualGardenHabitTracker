@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { todayLocalDate, toDbDate } from "@/lib/dates";
 import { isScheduledOn } from "@/lib/habits/schedule";
+import { ensureRollupsCurrent } from "@/lib/rollup/ensure-current";
 import { TodayHabitList } from "@/components/today/today-habit-list";
 
 export default async function TodayPage() {
@@ -11,6 +12,9 @@ export default async function TodayPage() {
   if (!session?.user?.id) {
     redirect("/sign-in");
   }
+
+  // No scheduler on Vercel Hobby — rollups backfill lazily on read.
+  await ensureRollupsCurrent(session.user.id);
 
   const localDate = todayLocalDate(session.user.timezone);
   const dbDate = toDbDate(localDate);

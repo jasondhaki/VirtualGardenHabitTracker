@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { todayLocalDate, toDbDate } from "@/lib/dates";
+import { ensureRollupsCurrent } from "@/lib/rollup/ensure-current";
+import { upsertTodayRollup } from "@/lib/rollup/today";
 
 const toggleCompletionSchema = z.object({
   habitId: z.string().min(1),
@@ -35,17 +37,27 @@ export async function toggleCompletion(input: { habitId: string }) {
   const localDate = todayLocalDate(session.user.timezone);
   const dbDate = toDbDate(localDate);
 
+  // Backfill through yesterday first so today's rollup has a streak state
+  // to resume from. Cheap no-op once the user is already current.
+  await ensureRollupsCurrent(userId);
+
   const existing = await db.completion.findUnique({
     where: { habitId_localDate: { habitId, localDate: dbDate } },
   });
 
-  if (existing) {
-    await db.completion.delete({ where: { id: existing.id } });
-  } else {
-    await db.completion.create({
-      data: { habitId, userId, localDate: dbDate },
-    });
-  }
+  await db.$transaction(async (tx) => {
+    if (existing) {
+      await tx.completion.delete({ where: { id: existing.id } });
+    } else {
+      await tx.completion.create({
+        data: { habitId, userId, localDate: dbDate },
+      });
+    }
+
+    // Rollup write path inside the completion transaction (build plan §11
+    // P3) — a check-off and its effect on today's garden state land atomically.
+    await upsertTodayRollup(tx, userId, session.user.timezone);
+  });
 
   revalidatePath("/today");
 
