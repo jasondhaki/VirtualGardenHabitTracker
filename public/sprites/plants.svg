@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 128" shape-rendering="crispEdges">
+  <!-- Placeholder pixel-art plant sheet (build plan §9.4 — swap for a real
+       Kenney/Cup Nooble/LimeZu tileset before shipping publicly). 5x4 grid,
+       32x32 units per cell. Index order is defined in lib/garden/sprites.ts
+       and must never change once a species has shipped with a spriteKey. -->
+
+  <!-- 0: clover -->
+  <g transform="translate(0,0)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="12" cy="13" r="3" fill="#58b368"/>
+    <circle cx="16" cy="10" r="3" fill="#58b368"/>
+    <circle cx="20" cy="13" r="3" fill="#58b368"/>
+    <circle cx="16" cy="13" r="1.5" fill="#ffffff"/>
+  </g>
+
+  <!-- 1: daisy -->
+  <g transform="translate(32,0)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="6" fill="#ffffff" stroke="#d8d8d8" stroke-width="0.5"/>
+    <circle cx="16" cy="13" r="3" fill="#f4c542"/>
+  </g>
+
+  <!-- 2: marigold -->
+  <g transform="translate(64,0)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="6" fill="#ef8a2b"/>
+    <circle cx="16" cy="13" r="3" fill="#c65b12"/>
+  </g>
+
+  <!-- 3: lavender -->
+  <g transform="translate(96,0)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <rect x="14" y="11" width="4" height="3" fill="#7b5ea7"/>
+    <rect x="14.5" y="7" width="3" height="3" fill="#7b5ea7"/>
+    <rect x="15" y="3" width="2" height="3" fill="#7b5ea7"/>
+  </g>
+
+  <!-- 4: sunflower -->
+  <g transform="translate(128,0)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="7" fill="#f7d13d"/>
+    <circle cx="16" cy="13" r="3" fill="#6b4423"/>
+  </g>
+
+  <!-- 5: fern -->
+  <g transform="translate(0,32)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="12" cy="20" r="2" fill="#3f7d43"/>
+    <circle cx="20" cy="20" r="2" fill="#3f7d43"/>
+    <circle cx="11" cy="14" r="2" fill="#3f7d43"/>
+    <circle cx="21" cy="14" r="2" fill="#3f7d43"/>
+  </g>
+
+  <!-- 6: tulip -->
+  <g transform="translate(32,32)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <polygon points="16,7 22,15 16,20 10,15" fill="#e0679e"/>
+  </g>
+
+  <!-- 7: bamboo -->
+  <g transform="translate(64,32)">
+    <rect x="13" y="24" width="6" height="6" fill="#6fae4a" stroke="#2f5a28" stroke-width="0.5"/>
+    <rect x="13" y="17" width="6" height="6" fill="#4a7c3f" stroke="#2f5a28" stroke-width="0.5"/>
+    <rect x="13" y="10" width="6" height="6" fill="#6fae4a" stroke="#2f5a28" stroke-width="0.5"/>
+  </g>
+
+  <!-- 8: wisteria -->
+  <g transform="translate(96,32)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="9" r="3" fill="#9b6fd1"/>
+    <circle cx="15" cy="13" r="2.5" fill="#9b6fd1"/>
+    <circle cx="17" cy="17" r="2" fill="#9b6fd1"/>
+  </g>
+
+  <!-- 9: maple-sapling -->
+  <g transform="translate(128,32)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="14" y="14" width="4" height="12" fill="#6b4a2f"/>
+    <circle cx="16" cy="12" r="5" fill="#d9622b"/>
+  </g>
+
+  <!-- 10: cherry-blossom -->
+  <g transform="translate(0,64)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="12" cy="13" r="3" fill="#f2a5c9"/>
+    <circle cx="16" cy="10" r="3" fill="#f2a5c9"/>
+    <circle cx="20" cy="13" r="3" fill="#f2a5c9"/>
+    <circle cx="16" cy="15" r="2.5" fill="#f2a5c9"/>
+  </g>
+
+  <!-- 11: first-sprout -->
+  <g transform="translate(32,64)">
+    <rect x="15" y="22" width="2" height="6" fill="#4a7c3f"/>
+    <circle cx="13" cy="20" r="2.5" fill="#7ed957"/>
+    <circle cx="19" cy="20" r="2.5" fill="#7ed957"/>
+  </g>
+
+  <!-- 12: dew-orchid -->
+  <g transform="translate(64,64)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="5" fill="#ffffff" stroke="#e8c7d8" stroke-width="0.5"/>
+    <circle cx="16" cy="13" r="2" fill="#e8749a"/>
+  </g>
+
+  <!-- 13: moonflower -->
+  <g transform="translate(96,64)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="6" fill="#cfe8ff" stroke="#9fc9e8" stroke-width="0.5"/>
+  </g>
+
+  <!-- 14: phoenix-lily -->
+  <g transform="translate(128,64)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <polygon points="16,6 23,14 16,22 9,14" fill="#e8491d"/>
+  </g>
+
+  <!-- 15: sunrise-poppy -->
+  <g transform="translate(0,96)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="13" r="6" fill="#d1382f"/>
+    <circle cx="16" cy="13" r="3" fill="#f4c542"/>
+  </g>
+
+  <!-- 16: ironwood -->
+  <g transform="translate(32,96)">
+    <rect x="13" y="16" width="6" height="14" fill="#4a3524"/>
+    <circle cx="16" cy="10" r="8" fill="#2f5a2a"/>
+  </g>
+
+  <!-- 17: rainbow-canopy -->
+  <g transform="translate(64,96)">
+    <rect x="10" y="26" width="12" height="4" fill="#7a5230"/>
+    <rect x="15" y="16" width="2" height="10" fill="#4a7c3f"/>
+    <circle cx="16" cy="7" r="2.5" fill="#e8491d"/>
+    <circle cx="22" cy="11" r="2.5" fill="#ef8a2b"/>
+    <circle cx="20" cy="18" r="2.5" fill="#f4c542"/>
+    <circle cx="12" cy="18" r="2.5" fill="#58b368"/>
+    <circle cx="10" cy="11" r="2.5" fill="#4a90d9"/>
+  </g>
+
+  <!-- 18: world-tree -->
+  <g transform="translate(96,96)">
+    <rect x="13" y="18" width="6" height="12" fill="#5a3d24"/>
+    <circle cx="13" cy="10" r="4" fill="#58b368"/>
+    <circle cx="19" cy="10" r="4" fill="#d9622b"/>
+    <circle cx="13" cy="16" r="4" fill="#ffffff" stroke="#dddddd" stroke-width="0.5"/>
+    <circle cx="19" cy="16" r="4" fill="#f2a5c9"/>
+  </g>
+</svg>

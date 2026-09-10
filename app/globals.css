@@ -22,3 +22,39 @@ body {
   color: var(--foreground);
   font-family: system-ui, sans-serif;
 }
+
+/* Garden grid (build plan §9.1 — CSS grid of divs, sprite-sheet
+   background-position, image-rendering: pixelated. No canvas, no <img>
+   per tile.) */
+.garden-grid {
+  display: grid;
+  gap: 2px;
+  width: fit-content;
+  padding: 4px;
+  background: #2f2a1f;
+  border-radius: 8px;
+}
+
+.garden-tile {
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.garden-tile--reserved {
+  background: #6fa8d8;
+}
+
+.garden-tile--locked {
+  background: #d8cdb0;
+  opacity: 0.55;
+}
+
+.garden-tile--planted {
+  background: #8fbf6a;
+}
+
+.garden-tile__sprite {
+  position: absolute;
+  inset: 0;
+  image-rendering: pixelated;
+}

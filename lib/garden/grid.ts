@@ -26,6 +26,19 @@ export interface GridCell {
   angleFromCenter: number;
 }
 
+export interface ReservedCell {
+  x: number;
+  y: number;
+}
+
+/** The 4 pond/path corners excluded from `plantableCells` (build plan §4.1). */
+export function reservedCells(): ReservedCell[] {
+  return [...RESERVED_CELLS].map((key) => {
+    const [x, y] = key.split(",").map(Number);
+    return { x, y };
+  });
+}
+
 export function plantableCells(): GridCell[] {
   const cells: GridCell[] = [];
   for (let x = 0; x < PLOT_SIZE; x++) {

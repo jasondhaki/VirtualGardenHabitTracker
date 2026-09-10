@@ -12,6 +12,7 @@ export async function SiteHeader() {
       {session?.user ? (
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/today">Today</Link>
+          <Link href="/garden">Garden</Link>
           <Link href="/habits">Habits</Link>
           <form
             action={async () => {
