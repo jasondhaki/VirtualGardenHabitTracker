@@ -1,5 +1,7 @@
 import { db } from "@/lib/db";
 import { formatDbDate } from "@/lib/dates";
+import { ensureAchievementsCurrent } from "@/lib/achievements/sync";
+import type { EarnedAchievement } from "@/lib/achievements/evaluate";
 import { ensureRollupsCurrent } from "@/lib/rollup/ensure-current";
 import { computeGardenPlacement, type PlacedTile } from "./placement";
 import type { SpeciesCatalogEntry } from "./species-pool";
@@ -19,22 +21,28 @@ function tileKey(tile: Pick<PlacedTile, "plotIndex" | "x" | "y">): string {
  * An already-unlocked tile's position and species never change (CLAUDE.md
  * invariant #1): if you find yourself writing an `UPDATE` against `Tile`
  * here, that's the bug.
+ *
+ * Returns any achievements newly earned during this call, for an unlock feed.
  */
-export async function ensureGardenCurrent(userId: string): Promise<void> {
+export async function ensureGardenCurrent(userId: string): Promise<EarnedAchievement[]> {
   await ensureRollupsCurrent(userId);
 
   const user = await db.user.findUnique({
     where: { id: userId },
-    select: { gardenSeed: true, currentPlotCount: true },
+    select: { gardenSeed: true, currentPlotCount: true, timezone: true },
   });
-  if (!user) return;
+  if (!user) return [];
+
+  // Achievements must land before the placement read below — a feature slot
+  // can only draw a RARE/LEGENDARY species once its achievement is earned.
+  const newlyEarnedAchievements = await ensureAchievementsCurrent(db, userId, user.timezone);
 
   const rollups = await db.dayRollup.findMany({
     where: { userId },
     orderBy: { localDate: "asc" },
     select: { localDate: true, pointsEarned: true },
   });
-  if (rollups.length === 0) return;
+  if (rollups.length === 0) return newlyEarnedAchievements;
 
   const pointsTimeline = buildPointsTimeline(
     rollups.map((row) => ({ localDate: formatDbDate(row.localDate), pointsEarned: row.pointsEarned }))
@@ -76,4 +84,6 @@ export async function ensureGardenCurrent(userId: string): Promise<void> {
   if (plotCount > user.currentPlotCount) {
     await db.user.update({ where: { id: userId }, data: { currentPlotCount: plotCount } });
   }
+
+  return newlyEarnedAchievements;
 }

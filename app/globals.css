@@ -26,6 +26,11 @@ body {
 /* Garden grid (build plan §9.1 — CSS grid of divs, sprite-sheet
    background-position, image-rendering: pixelated. No canvas, no <img>
    per tile.) */
+.garden-plot-wrap {
+  position: relative;
+  width: fit-content;
+}
+
 .garden-grid {
   display: grid;
   gap: 2px;
@@ -57,4 +62,138 @@ body {
   position: absolute;
   inset: 0;
   image-rendering: pixelated;
+  transform-origin: bottom center;
+}
+
+/* Wilt tiers (build plan §3.4) — one shared trailing-14-day signal for the
+   whole garden, expressed purely in CSS: no new sprite art per stage. */
+.garden-grid--thriving .garden-tile__sprite,
+.garden-grid--healthy .garden-tile__sprite {
+  filter: saturate(1);
+}
+
+.garden-grid--drooping .garden-tile__sprite {
+  filter: saturate(0.7);
+  transform: rotate(4deg);
+}
+
+.garden-grid--dormant .garden-tile__sprite {
+  filter: saturate(0.4) brightness(0.92);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .garden-grid--thriving .garden-tile__sprite,
+  .garden-grid--healthy .garden-tile__sprite {
+    animation: plant-sway 3s ease-in-out infinite;
+    animation-delay: var(--sway-delay, 0ms);
+  }
+
+  .garden-grid--drooping .garden-tile__sprite {
+    animation: plant-sway-drooping 5s ease-in-out infinite;
+    animation-delay: var(--sway-delay, 0ms);
+  }
+
+  /* Thriving-only occasional particles (build plan §3.4). */
+  .garden-grid--thriving .garden-tile--planted::after {
+    content: "";
+    position: absolute;
+    top: 8%;
+    left: 62%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff6c9;
+    box-shadow: 0 0 4px 1px rgb(255 246 201 / 0.7);
+    animation: plant-sparkle 2.4s ease-in-out infinite;
+    animation-delay: var(--sway-delay, 0ms);
+    pointer-events: none;
+  }
+}
+
+@keyframes plant-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes plant-sway-drooping {
+  0%,
+  100% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes plant-sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+/* Season/weather overlay — z3 layer (build plan §9.2). Decorative only,
+   never affects tile hit-testing or focus order. */
+.garden-overlay {
+  position: absolute;
+  inset: 4px;
+  border-radius: 8px;
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+.garden-overlay--spring {
+  background: linear-gradient(160deg, rgb(255 217 236 / 0.35), transparent 60%);
+}
+
+.garden-overlay--summer {
+  background: linear-gradient(160deg, rgb(255 242 176 / 0.35), transparent 60%);
+}
+
+.garden-overlay--fall {
+  background: linear-gradient(160deg, rgb(255 180 102 / 0.35), transparent 60%);
+}
+
+.garden-overlay--winter {
+  background: linear-gradient(160deg, rgb(207 232 255 / 0.4), transparent 60%);
+}
+
+.garden-overlay__weather {
+  position: absolute;
+  inset: 0;
+}
+
+.garden-overlay__weather--sunny {
+  background: radial-gradient(circle at 85% 10%, rgb(255 248 208 / 0.65), transparent 40%);
+}
+
+.garden-overlay__weather--rain {
+  background: repeating-linear-gradient(115deg, rgb(255 255 255 / 0.25) 0 2px, transparent 2px 14px);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .garden-overlay__weather--rain {
+    animation: rain-fall 0.6s linear infinite;
+  }
+}
+
+@keyframes rain-fall {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -30px 60px;
+  }
 }

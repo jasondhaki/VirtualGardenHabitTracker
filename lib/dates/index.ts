@@ -34,3 +34,20 @@ export function addDaysToLocalDate(localDate: string, days: number): string {
 export function compareLocalDates(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
 }
+
+export type Season = "winter" | "spring" | "summer" | "fall";
+
+/**
+ * Meteorological (Northern-hemisphere) season for a `yyyy-MM-dd` local date
+ * string — the app never collects a user's location, so this is a
+ * deliberate simplification, not a timezone bug. Read the month straight out
+ * of the string rather than through a `Date`, so there's no UTC-offset
+ * subtlety to get wrong (see `formatDbDate` above for why that matters here).
+ */
+export function localSeason(localDate: string): Season {
+  const month = Number(localDate.slice(5, 7));
+  if (month === 12 || month <= 2) return "winter";
+  if (month <= 5) return "spring";
+  if (month <= 8) return "summer";
+  return "fall";
+}

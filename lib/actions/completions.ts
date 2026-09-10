@@ -59,6 +59,12 @@ export async function toggleCompletion(input: { habitId: string }) {
     await upsertTodayRollup(tx, userId, session.user.timezone);
   });
 
+  // Achievement evaluation deliberately stays out of this transaction: it's
+  // a full-history scan (build plan §6.3's polyculture rule alone is
+  // O(days × habits)), and /today is the screen CLAUDE.md says to optimize
+  // ruthlessly. Tile placement follows the same shape — lazy, on the next
+  // /garden read via ensureGardenCurrent, not eager on every checkbox tap.
+
   revalidatePath("/today");
 
   return { completed: !existing };

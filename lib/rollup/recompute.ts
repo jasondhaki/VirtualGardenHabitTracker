@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { todayLocalDate } from "@/lib/dates";
+import { ensureAchievementsCurrent } from "@/lib/achievements/sync";
 import { computeRollupRange } from "./compute";
 import { earliestCreatedLocalDate, loadCompletionsForRollup, loadHabitsForRollup } from "./loaders";
 import { upsertRollupRows } from "./upsert";
@@ -28,5 +29,11 @@ export async function recomputeAllRollups(userId: string): Promise<void> {
     const completions = await loadCompletionsForRollup(tx, userId, from, today);
     const rows = computeRollupRange(from, today, habits, completions, initialStreakState());
     await upsertRollupRows(tx, userId, rows);
+
+    // Re-evaluate in the same job that rewrote DayRollup (build plan §6.3),
+    // so a recompute regenerates any unlocks a since-fixed schedule/target
+    // edit should have produced. Write-once (CLAUDE.md invariant #1): this
+    // only ever inserts rows still missing, never revokes an earned one.
+    await ensureAchievementsCurrent(tx, userId, user.timezone);
   });
 }

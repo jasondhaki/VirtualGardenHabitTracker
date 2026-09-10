@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addDaysToLocalDate, compareLocalDates, formatDbDate, toDbDate, todayLocalDate } from "./index";
+import { addDaysToLocalDate, compareLocalDates, formatDbDate, localSeason, toDbDate, todayLocalDate } from "./index";
 
 describe("todayLocalDate", () => {
   it("resolves the same instant to different calendar dates in different timezones (date-line crossing)", () => {
@@ -72,5 +72,23 @@ describe("compareLocalDates", () => {
     expect(compareLocalDates("2026-01-01", "2025-12-31")).toBeGreaterThan(0);
     expect(compareLocalDates("2026-01-01", "2026-01-01")).toBe(0);
     expect(compareLocalDates("2026-01-01", "2026-01-02")).toBeLessThan(0);
+  });
+});
+
+describe("localSeason", () => {
+  it("classifies every month into its meteorological season", () => {
+    expect(localSeason("2026-01-15")).toBe("winter");
+    expect(localSeason("2026-02-15")).toBe("winter");
+    expect(localSeason("2026-03-15")).toBe("spring");
+    expect(localSeason("2026-05-15")).toBe("spring");
+    expect(localSeason("2026-06-15")).toBe("summer");
+    expect(localSeason("2026-08-15")).toBe("summer");
+    expect(localSeason("2026-09-15")).toBe("fall");
+    expect(localSeason("2026-11-15")).toBe("fall");
+    expect(localSeason("2026-12-15")).toBe("winter");
+  });
+
+  it("puts December in winter alongside January/February, not treated as month 0", () => {
+    expect(localSeason("2026-12-31")).toBe("winter");
   });
 });
