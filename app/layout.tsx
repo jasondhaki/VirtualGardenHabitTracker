@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { auth } from "@/auth";
 import { TimezoneSync } from "@/components/timezone-sync";
+import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
   title: "Habit Garden",
@@ -19,6 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         {session?.user ? <TimezoneSync /> : null}
+        <SiteHeader />
         {children}
       </body>
     </html>
