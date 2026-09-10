@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { randomInt } from "crypto";
 import { db } from "@/lib/db";
+import { generateUniqueUsername } from "@/lib/auth/username";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
@@ -29,9 +30,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // placement engine, which must be reproducible from stored state alone.
     async createUser({ user }) {
       const gardenSeed = randomInt(0, 2147483647);
+      const username = await generateUniqueUsername(db, user.email?.split("@")[0] ?? user.id ?? "gardener");
       await db.user.update({
         where: { id: user.id },
-        data: { gardenSeed },
+        data: { gardenSeed, username },
       });
     },
   },

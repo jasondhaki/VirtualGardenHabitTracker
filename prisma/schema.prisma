@@ -54,6 +54,7 @@ model User {
   emailVerified    DateTime?
   name             String?
   image            String?
+  username         String    @unique // generated at signup, see events.createUser; powers /g/[username]
   timezone         String    @default("UTC") // IANA, e.g. "Asia/Dhaka"; overwritten right after signup, see events.createUser
   gardenSeed       Int       @default(0) // placeholder; overwritten right after signup, see events.createUser
   currentPlotCount Int       @default(1)
