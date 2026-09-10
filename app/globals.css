@@ -14,6 +14,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    /* Tailwind's gray-500 (#6a7282) is only ~4.09:1 against this background —
+       below the 4.5:1 AA minimum for body text. Re-pointing the token at
+       gray-400 restores AA contrast everywhere `text-gray-500` is used for
+       secondary text, without touching every call site individually. */
+    --color-gray-500: #9ca3af;
   }
 }
 

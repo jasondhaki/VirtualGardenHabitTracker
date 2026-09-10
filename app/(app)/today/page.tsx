@@ -45,14 +45,16 @@ export default async function TodayPage() {
   return (
     <main className="mx-auto flex max-w-xl flex-col gap-6 p-6">
       <h1 className="text-2xl font-semibold">Today</h1>
-      {scheduledHabits.length === 0 ? (
+      {habits.length === 0 ? (
         <p className="text-sm text-gray-500">
-          Nothing scheduled today.{" "}
+          You haven&apos;t added any habits yet.{" "}
           <Link href="/habits" className="underline">
-            Add a habit
+            Add your first habit
           </Link>{" "}
-          to get started.
+          to start growing your garden.
         </p>
+      ) : scheduledHabits.length === 0 ? (
+        <p className="text-sm text-gray-500">Nothing scheduled today — enjoy the rest day.</p>
       ) : (
         <TodayHabitList habits={scheduledHabits} initialCompletions={initialCompletions} />
       )}

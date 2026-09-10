@@ -23,7 +23,7 @@ export function TimelineScrubber({ snapshots }: { snapshots: DaySnapshot[] }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex items-baseline justify-between text-sm text-gray-500">
+      <div className="flex items-baseline justify-between text-sm text-gray-500" aria-live="polite">
         <span>{isToday ? "Today" : day.localDate}</span>
         <span>{day.totalPoints} points</span>
       </div>

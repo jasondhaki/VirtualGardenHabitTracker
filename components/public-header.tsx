@@ -8,7 +8,7 @@ import Link from "next/link";
  */
 export function PublicHeader() {
   return (
-    <header className="flex items-center justify-between border-b border-gray-200 px-6 py-3">
+    <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-gray-200 px-4 py-3 sm:px-6">
       <Link href="/" className="font-semibold">
         Habit Garden
       </Link>

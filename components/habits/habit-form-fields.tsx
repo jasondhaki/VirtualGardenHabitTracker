@@ -53,7 +53,7 @@ export function HabitFormFields({ defaults }: { defaults?: Defaults }) {
           {SCHEDULE_DAYS.map((day) => (
             <label
               key={day.key}
-              className="flex items-center gap-1 rounded-md border border-gray-300 px-2 py-1"
+              className="flex items-center gap-1 rounded-md border border-gray-300 px-3 py-2"
             >
               <input
                 type="checkbox"

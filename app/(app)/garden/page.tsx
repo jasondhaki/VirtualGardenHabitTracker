@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { compareLocalDates, formatDbDate, localSeason, todayLocalDate } from "@/lib/dates";
@@ -139,7 +140,15 @@ export default async function GardenPage() {
 
       <TimelineScrubber snapshots={snapshots} />
 
-      {nextUnlock !== null ? (
+      {totalPoints === 0 ? (
+        <p className="text-sm text-gray-500">
+          Your garden is empty for now.{" "}
+          <Link href="/today" className="underline">
+            Complete a habit
+          </Link>{" "}
+          to plant your first tile.
+        </p>
+      ) : nextUnlock !== null ? (
         <p className="text-sm text-gray-500">{Math.max(nextUnlock - totalPoints, 0)} points until your next plant.</p>
       ) : awaitingFeatureSlotOnly ? (
         <p className="text-sm text-gray-500">Every common plot is full — what&apos;s left here only grows from a rare achievement.</p>

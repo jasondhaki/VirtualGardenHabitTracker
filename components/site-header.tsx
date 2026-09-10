@@ -5,12 +5,12 @@ export async function SiteHeader() {
   const session = await auth();
 
   return (
-    <header className="flex items-center justify-between border-b border-gray-200 px-6 py-3">
+    <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-gray-200 px-4 py-3 sm:px-6">
       <Link href="/" className="font-semibold">
         Habit Garden
       </Link>
       {session?.user ? (
-        <nav className="flex items-center gap-4 text-sm">
+        <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
           <Link href="/today">Today</Link>
           <Link href="/garden">Garden</Link>
           <Link href="/habits">Habits</Link>

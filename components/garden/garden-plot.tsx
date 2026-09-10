@@ -7,6 +7,13 @@ import { GardenWeatherOverlay } from "./garden-weather-overlay";
 
 const TILE_PX = 48;
 
+const WILT_LABELS: Record<WiltTier, string> = {
+  thriving: "Thriving",
+  healthy: "Healthy",
+  drooping: "Drooping",
+  dormant: "Dormant",
+};
+
 /**
  * Per-tile sway delay (build plan §9.3) so plants don't move in lockstep.
  * The plan's pseudocode uses `%`, which `calc()` can't do — computed here
@@ -29,10 +36,15 @@ function swayDelayMs(x: number, y: number): number {
  */
 export function GardenPlot({ model, wiltTier, season }: { model: PlotRenderModel; wiltTier: WiltTier; season: Season }) {
   const byCoord = new Map(model.cells.map((cell) => [`${cell.x}:${cell.y}`, cell]));
+  const wiltLabel = WILT_LABELS[wiltTier];
+  const plantedCount = model.cells.filter((cell) => cell.kind === "planted").length;
+  const totalPlantable = model.cells.filter((cell) => cell.kind !== "reserved").length;
 
   return (
     <div className="garden-plot-wrap">
       <div
+        role="img"
+        aria-label={`Garden plot ${model.plotIndex}: ${plantedCount} of ${totalPlantable} tiles planted, ${wiltLabel}.`}
         className={`garden-grid garden-grid--${wiltTier}`}
         style={{
           gridTemplateColumns: `repeat(${model.size}, ${TILE_PX}px)`,
@@ -78,6 +90,7 @@ export function GardenPlot({ model, wiltTier, season }: { model: PlotRenderModel
       </div>
 
       <GardenWeatherOverlay season={season} wiltTier={wiltTier} />
+      <p className="mt-1 text-xs text-gray-500">{wiltLabel}</p>
     </div>
   );
 }
