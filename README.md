@@ -55,6 +55,8 @@ The streak, rollup, and placement logic is the least visually obvious code to br
 
 Full design rationale — growth math, unlock curves, wilt tiers, the free-tier constraints that shaped every one of the above choices — lives in [`habit-garden-build-plan.md`](./habit-garden-build-plan.md).
 
+Neon's free tier autosuspends an idle database, so `/demo` is statically generated and never touches it. Signed-in pages still hit Postgres, though, so a scheduled GitHub Action (`.github/workflows/keep-warm.yml`) pings `/api/health` every 6 hours to keep cold starts off the first real visitor of the day — set an `APP_URL` repo secret once deployed to enable it.
+
 ## Running locally
 
 ```bash

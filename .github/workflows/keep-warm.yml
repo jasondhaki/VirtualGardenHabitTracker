@@ -1,0 +1,28 @@
+name: Keep Neon warm
+
+# Pings the deployed app every 6 hours so Neon's free-tier autosuspend
+# doesn't cold-start the first real visitor of the day. /demo is statically
+# generated and never touches the database (see CLAUDE.md), so this hits
+# /api/health instead, which runs a trivial query against Postgres.
+#
+# Requires an APP_URL repository secret set to the production deployment
+# URL (Settings -> Secrets and variables -> Actions). Skipped if unset, so
+# this workflow is a no-op until that secret is configured.
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /api/health
+        run: |
+          if [ -z "$APP_URL" ]; then
+            echo "APP_URL secret is not set — skipping ping."
+            exit 0
+          fi
+          curl -fsS "$APP_URL/api/health"
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
